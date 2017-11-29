@@ -752,7 +752,13 @@ angular.module('ui.grid')
   };
 
   GridRenderContainer.prototype.needsHScrollbarPlaceholder = function () {
-    return this.grid.options.enableHorizontalScrollbar && !this.hasHScrollbar && !this.grid.disableScrolling;
+    if (this.name === 'left') {
+      var $body = $("div[container-id=\"'body'\"]");
+      var $bodyCanvas = $body.find('.ui-grid-canvas');
+      return $body[0].clientWidth < $bodyCanvas[0].clientWidth;
+    } else {
+      return this.grid.options.enableHorizontalScrollbar && !this.hasHScrollbar && !this.grid.disableScrolling;
+    }
   };
 
   GridRenderContainer.prototype.getViewportStyle = function () {
